@@ -13,24 +13,24 @@ export default class Form extends Component{
                     <label className="field__label">
                         <span className="field-label">Имя</span>
                     </label>
-                    <input className="field__input field-input t-input-firstname firstname" name="firstname"></input>
-                    <span className="field__error field-error t-error-firstname"></span>
+                    <input className="field__input field-input t-input-firstname firstname" name="firstname" onBlur={this.chekedFirstName}></input>
+                    <span className="field__error field-error t-error-firstname">{this.state.firstNameContent}</span>
                 </p>
 
                 <p className="field">
                     <label className="field__label">
                         <span className="field-label">Фамилия</span>
                     </label>
-                    <input className="field__input field-input t-input-lastname lastname" name="lastname"></input>
-                    <span className="field__error field-error t-error-lastname"></span>
+                    <input className="field__input field-input t-input-lastname lastname" name="lastname" onBlur={this.chekedlastName}></input>
+                    <span className="field__error field-error t-error-lastname">{this.state.lastNameContent}</span>
                 </p>
 
                 <p className="field">
                     <label className="field__label">
                         <span className="field-label">Пароль</span>
                     </label>
-                    <input className="field__input field-input t-input-password password" name="password"></input>
-                    <span className="field__error field-error t-error-password"></span>
+                    <input className="field__input field-input t-input-password password" name="password" onBlur={this.chekedPassword}></input>
+                    <span className="field__error field-error t-error-password">{this.state.passwordContent}</span>
                 </p>
 
                 <div className="form__buttons"><input type="submit" className="button t-submit" value="Проверить" onClick={this.checkedAll}></input></div>    
@@ -42,22 +42,23 @@ export default class Form extends Component{
     state = {
         firstName:'james',
         lastName:'bond',
-        password: '007'
+        password: '007',
+        firstNameContent: '',
+        lastNameContent: '',
+        passwordContent: '',
     }
 
 
     checkedAll=(e)=>{
         e.preventDefault();
-        
-        let counter = 0;
-        this.chekedFirstName() ? counter++ : counter = 0;
-        this.chekedlastName() ? counter++ : counter = 0;
-        this.chekedPassword() ? counter++ : counter = 0;
-        
-        if(counter === 3){
-            console.log('Log In succsesfull')
-            ReactDOM.render(<Window />, document.getElementById('root'));
+        let firstname = document.querySelector('.firstname').value.toLowerCase();
+        let lastname = document.querySelector('.lastname').value.toLowerCase();
+        let password = document.querySelector('.password').value.toLowerCase();
+
+        if(firstname === this.state.firstName && lastname === this.state.lastName && password === this.state.password){
+           ReactDOM.render(<Window />,document.getElementById('root'));
         }
+        
     }
 
     chekedFirstName=()=>{
@@ -65,11 +66,16 @@ export default class Form extends Component{
         let firstname = document.querySelector('.firstname').value.toLowerCase();
 
         if(firstname === this.state.firstName){
+            this.setState({
+                firstNameContent: ''
+            })
             return true;
         }else {
             firstname === '' ? content = 'Нужно указать имя': content = 'Имя указано не верно';
         }
-        document.querySelector('.t-error-firstname').textContent = content;
+        this.setState({
+            firstNameContent: content
+        });
         return false;
     }
 
@@ -77,11 +83,16 @@ export default class Form extends Component{
         let content;
         let lastname = document.querySelector('.lastname').value.toLowerCase();
         if(lastname === this.state.lastName){
+            this.setState({
+                lastNameContent: ''
+            })
             return true;
         }else {
             lastname === '' ? content = 'Нужно указать фамилию': content = 'Фамилию указано не верно';
         }
-        document.querySelector('.t-error-lastname').textContent = content;
+        this.setState({
+            lastNameContent: content
+        });
         return false;
     }
 
@@ -89,11 +100,16 @@ export default class Form extends Component{
         let content;
         let password_value = document.querySelector('.password').value;
         if(password_value === this.state.password){
+            this.setState({
+                passwordContent: ''
+            })
             return true;
         }else {
             password_value === '' ? content = 'Нужно указать пароль': content = 'Пароль указано не верно';
         }
-        document.querySelector('.t-error-password').textContent = content;
+        this.setState({
+            passwordContent: content
+        });
         return false;
     }
 }
