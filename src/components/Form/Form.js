@@ -51,19 +51,14 @@ export default class Form extends Component{
 
     checkedAll=(e)=>{
         e.preventDefault();
-        let firstname = document.querySelector('.firstname').value.toLowerCase();
-        let lastname = document.querySelector('.lastname').value.toLowerCase();
-        let password = document.querySelector('.password').value.toLowerCase();
-
-        if(firstname === this.state.firstName && lastname === this.state.lastName && password === this.state.password){
-           ReactDOM.render(<Window />,document.getElementById('root'));
-        }
-        
+        if(this.state.firstNameContent === '' && this.state.lastNameContent === '' && this.state.passwordContent === '')
+        ReactDOM.render(<Window />,document.getElementById('root'));
     }
 
-    chekedFirstName=()=>{
+    chekedFirstName=(e)=>{
         let content;
-        let firstname = document.querySelector('.firstname').value.toLowerCase();
+        let firstname = e.target.value.toLowerCase();
+
 
         if(firstname === this.state.firstName){
             this.setState({
@@ -79,9 +74,9 @@ export default class Form extends Component{
         return false;
     }
 
-    chekedlastName=()=>{
+    chekedlastName=(e)=>{
         let content;
-        let lastname = document.querySelector('.lastname').value.toLowerCase();
+        let lastname = e.target.value.toLowerCase();
         if(lastname === this.state.lastName){
             this.setState({
                 lastNameContent: ''
@@ -96,9 +91,9 @@ export default class Form extends Component{
         return false;
     }
 
-    chekedPassword=()=>{
+    chekedPassword=(e)=>{
         let content;
-        let password_value = document.querySelector('.password').value;
+        let password_value = e.target.value.toLowerCase()
         if(password_value === this.state.password){
             this.setState({
                 passwordContent: ''
