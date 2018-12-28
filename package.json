@@ -5,6 +5,7 @@
   "dependencies": {
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-router": "^4.3.1",
     "react-scripts": "1.1.5"
   },
   "scripts": {
@@ -19,6 +20,7 @@
     "cypress": "^3.1.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
-    "eslint-plugin-cypress": "^2.0.1"
+    "eslint-plugin-cypress": "^2.0.1",
+    "react-router-dom": "^4.3.1"
   }
 }

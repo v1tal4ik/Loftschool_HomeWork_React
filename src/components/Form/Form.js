@@ -1,12 +1,18 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter, Route, Link } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory';
 import '../Form/Form.css';
+
+
+const history = createBrowserHistory();
 
 
 export default class Form extends Component{
     render(){
         return(
-            <div className="app-container">
+            <BrowserRouter history = {history}>
+                <div className="app-container">
             <form className="form">
                 <h1>Введите свои дание агент</h1>
                 <p className="field">
@@ -29,13 +35,16 @@ export default class Form extends Component{
                     <label className="field__label">
                         <span className="field-label">Пароль</span>
                     </label>
-                    <input className="field__input field-input t-input-password password" name="password" onBlur={this.chekedPassword}></input>
+                    <input type ="password" className="field__input field-input t-input-password password" name="password" onBlur={this.chekedPassword}></input>
                     <span className="field__error field-error t-error-password">{this.state.passwordContent}</span>
                 </p>
 
-                <div className="form__buttons"><input type="submit" className="button t-submit" value="Проверить" onClick={this.checkedAll}></input></div>    
+                <Link to='/main'><div className="form__buttons"><input type="submit" className="button t-submit" value="Проверить" onClick={this.checkedAll}></input></div></Link>
+                <Route exact path="/main" component={Window} />    
             </form>
             </div>
+            </BrowserRouter>
+
         )
     }
 
@@ -51,7 +60,8 @@ export default class Form extends Component{
 
     checkedAll=(e)=>{
         e.preventDefault();
-        if(this.state.firstNameContent === '' && this.state.lastNameContent === '' && this.state.passwordContent === '')
+        const { firstNameContent, lastNameContent, passwordContent } = this.state;
+        if(firstNameContent === '' && lastNameContent === '' && passwordContent === '')
         ReactDOM.render(<Window />,document.getElementById('root'));
     }
 
@@ -66,7 +76,7 @@ export default class Form extends Component{
             })
             return true;
         }else {
-            firstname === '' ? content = 'Нужно указать имя': content = 'Имя указано не верно';
+            content = (firstname === '') ? 'Нужно указать имя': 'Имя указано не верно';
         }
         this.setState({
             firstNameContent: content
@@ -83,7 +93,7 @@ export default class Form extends Component{
             })
             return true;
         }else {
-            lastname === '' ? content = 'Нужно указать фамилию': content = 'Фамилию указано не верно';
+            content= (lastname === '') ? 'Нужно указать фамилию': 'Фамилию указано не верно';
         }
         this.setState({
             lastNameContent: content
@@ -100,7 +110,7 @@ export default class Form extends Component{
             })
             return true;
         }else {
-            password_value === '' ? content = 'Нужно указать пароль': content = 'Пароль указано не верно';
+           content =( password_value === '') ? 'Нужно указать пароль': 'Пароль указано не верно';
         }
         this.setState({
             passwordContent: content
@@ -111,11 +121,16 @@ export default class Form extends Component{
 
 
 
-export  class Window extends Component{
+class Window extends Component{
     render(){
         return(
-            <img src="../assets/bond_approve.jpg" alt="bond approve" className="t-bond-image"></img>
+            <img src="https://cdn.images.express.co.uk/img/dynamic/36/590x/James-Bond-25-release-date-when-is-new-James-Bond-movie-out-1020320.jpg?r=1537442060383" alt="bond approve" className="t-bond-image"></img>
         )
     }
 }
+
+
+
+
+
 
