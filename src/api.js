@@ -5,8 +5,7 @@ const showUrls = {
 };
 
 export default function getShowInfo (showName){
-  console.log('work get');
-  const serialUrl = showUrls[showName];
+    const serialUrl = showUrls[showName];
   if (serialUrl == null) {
     throw new Error(
       'The name of the show must be specified[house, santaBarbara, bigBang]'
