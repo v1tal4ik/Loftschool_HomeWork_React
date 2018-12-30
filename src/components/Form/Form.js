@@ -9,45 +9,6 @@ const history = createBrowserHistory();
 
 
 export default class Form extends Component{
-    render(){
-        return(
-            <BrowserRouter history = {history}>
-                <div className="app-container">
-            <form className="form">
-                <h1>Введите свои дание агент</h1>
-                <p className="field">
-                    <label className="field__label">
-                        <span className="field-label">Имя</span>
-                    </label>
-                    <input className="field__input field-input t-input-firstname firstname" name="firstname" onBlur={this.chekedFirstName}></input>
-                    <span className="field__error field-error t-error-firstname">{this.state.firstNameContent}</span>
-                </p>
-
-                <p className="field">
-                    <label className="field__label">
-                        <span className="field-label">Фамилия</span>
-                    </label>
-                    <input className="field__input field-input t-input-lastname lastname" name="lastname" onBlur={this.chekedlastName}></input>
-                    <span className="field__error field-error t-error-lastname">{this.state.lastNameContent}</span>
-                </p>
-
-                <p className="field">
-                    <label className="field__label">
-                        <span className="field-label">Пароль</span>
-                    </label>
-                    <input type ="password" className="field__input field-input t-input-password password" name="password" onBlur={this.chekedPassword}></input>
-                    <span className="field__error field-error t-error-password">{this.state.passwordContent}</span>
-                </p>
-
-                <Link to='/main'><div className="form__buttons"><input type="submit" className="button t-submit" value="Проверить" onClick={this.checkedAll}></input></div></Link>
-                <Route exact path="/main" component={Window} />    
-            </form>
-            </div>
-            </BrowserRouter>
-
-        )
-    }
-
     state = {
         firstName:'james',
         lastName:'bond',
@@ -116,6 +77,45 @@ export default class Form extends Component{
             passwordContent: content
         });
         return false;
+    }
+
+    render(){
+        return(
+            <BrowserRouter history = {history}>
+                <div className="app-container">
+                    <form className="form">
+                        <h1>Введите свои дание агент</h1>
+                        <p className="field">
+                            <label className="field__label">
+                                <span className="field-label">Имя</span>
+                            </label>
+                            <input className="field__input field-input t-input-firstname firstname" name="firstname" onBlur={this.chekedFirstName}></input>
+                            <span className="field__error field-error t-error-firstname">{this.state.firstNameContent}</span>
+                        </p>
+
+                        <p className="field">
+                            <label className="field__label">
+                                <span className="field-label">Фамилия</span>
+                            </label>
+                            <input className="field__input field-input t-input-lastname lastname" name="lastname" onBlur={this.chekedlastName}></input>
+                            <span className="field__error field-error t-error-lastname">{this.state.lastNameContent}</span>
+                        </p>
+
+                        <p className="field">
+                            <label className="field__label">
+                                <span className="field-label">Пароль</span>
+                            </label>
+                            <input type ="password" className="field__input field-input t-input-password password" name="password" onBlur={this.chekedPassword}></input>
+                            <span className="field__error field-error t-error-password">{this.state.passwordContent}</span>
+                        </p>
+
+                        <Link to='/main'><div className="form__buttons"><input type="submit" className="button t-submit" value="Проверить" onClick={this.checkedAll}></input></div></Link>
+                        <Route exact path="/main" component={Window} />    
+                    </form>
+            </div>
+            </BrowserRouter>
+
+        )
     }
 }
 
