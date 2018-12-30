@@ -6,7 +6,7 @@ import './Show.css';
 
 export default class Show extends Component{
     state = {
-        showId : 'Шоу не вибрано',
+        showId : 'Шоу не вибрано!',
         data: {}
     }
 
