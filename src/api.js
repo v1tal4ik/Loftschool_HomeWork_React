@@ -4,8 +4,8 @@ const showUrls = {
   bigBang: ' http://api.tvmaze.com/shows/66'
 };
 
-export default function getShowInfo (showName){
-    const serialUrl = showUrls[showName];
+export const getShowInfo = showName => {
+  const serialUrl = showUrls[showName];
   if (serialUrl == null) {
     throw new Error(
       'The name of the show must be specified[house, santaBarbara, bigBang]'

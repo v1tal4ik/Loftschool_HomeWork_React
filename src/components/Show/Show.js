@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import getShowInfo from './../../api';
+import { getShowInfo } from './../../api';
 import './Show.css';
 
 
@@ -10,12 +10,11 @@ export default class Show extends Component{
         data: {}
     }
 
-    componentDidUpdate(prevProps){
-        let {showId} = this.props;
-        if(prevProps.showId !== showId){
-            getShowInfo(showId).then((response)=>{
+    componentDidMount=()=>{
+        if(this.props.showId !== ''){
+            getShowInfo(this.props.showId).then((response)=>{
                 this.setState({
-                    showId: showId,
+                    showId: this.props.showId,
                     data:{
                         name:response.name,
                         genres: response.genres.join(' '),
@@ -26,14 +25,18 @@ export default class Show extends Component{
                     }
                 })
             })
+        }else{
+            return 0;
         }
     }
+
+    
 
     render(){
         const {showId} = this.state;
         const {name,genres,image,language,premiered,summary} = this.state.data;
         return(
-            <div>
+            <div className="container">
                 <div className="state" >{showId}</div>
                 <div className="info">
                     <img src={image} alt="film" className="show-image"/>

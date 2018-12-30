@@ -33,7 +33,6 @@ class App extends PureComponent {
   selectShow = event => {
     this.setState({ selectedShow: event.target.value });
   };
-  
 
   render() {
     const { selectedShow } = this.state;
@@ -68,7 +67,7 @@ class App extends PureComponent {
             </div>
           ))}
         </div>
-        <Show showId={selectedShow} />
+        <Show key={selectedShow} showId={selectedShow} />
       </div>
     );
   }

@@ -10,26 +10,5 @@
   max-width: 200px;
   float: left;
   padding-right: 20px;
-  margin-bottom: 50px;
 }
 
-.state{
-  font-size: 20px;
-  text-align: center;
-  margin: 30px auto;
-}
-
-.name{
-  font-size: 22px;
-  font-weight: bold;
-}
-.genres span, .language span,.premiered span, .describe span{
-  font-size: 18px;
-  font-weight: bold;
-  margin-right: 5px;
-}
-
-.genres,.language  , .premiered ,.describe{
-  margin-top: 20px;
-  font-size: 16px;
-}
