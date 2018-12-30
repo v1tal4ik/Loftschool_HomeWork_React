@@ -5,11 +5,27 @@ import './Show.css';
 
 
 export default class Show extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            showId : 'Шоу не вибрано',
-            data: {}
+    state = {
+        showId : 'Шоу не вибрано',
+        data: {}
+    }
+
+    componentDidUpdate(prevProps){
+        let {showId} = this.props;
+        if(prevProps.showId !== showId){
+            getShowInfo(showId).then((response)=>{
+                this.setState({
+                    showId: showId,
+                    data:{
+                        name:response.name,
+                        genres: response.genres.join(' '),
+                        image: response.image.medium,
+                        language: response.language,
+                        premiered: response.premiered,
+                        summary: response.summary
+                    }
+                })
+            })
         }
     }
 
@@ -31,26 +47,5 @@ export default class Show extends Component{
                 </div>
             </div>
         )
-    }
-
-
-    componentDidUpdate(prevProps){
-        let {showId} = this.props;
-        if(prevProps.showId !== showId){
-            getShowInfo(showId).then((response)=>{
-                console.log(response);
-                this.setState({
-                    showId: showId,
-                    data:{
-                        name:response.name,
-                        genres: response.genres.join(' '),
-                        image: response.image.medium,
-                        language: response.language,
-                        premiered: response.premiered,
-                        summary: response.summary
-                    }
-                })
-            })
-        }
     }
 }
