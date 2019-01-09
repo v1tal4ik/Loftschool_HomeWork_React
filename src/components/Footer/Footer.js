@@ -4,7 +4,9 @@ import './Footer.css';
 
 class Footer extends PureComponent {
   render() {
-    return 'empty';
+    return (
+      <div>Footer</div>
+    );
   }
 }
 

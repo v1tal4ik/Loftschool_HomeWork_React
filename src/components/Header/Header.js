@@ -5,7 +5,9 @@ import './Header.css';
 
 class Header extends PureComponent {
   render() {
-    return ('empty');
+    return (
+      <div>Header</div>
+    );
   }
 }
 

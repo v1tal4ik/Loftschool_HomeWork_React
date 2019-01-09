@@ -3,16 +3,24 @@ import SectionTitle from '../SectionTitle';
 import './Layout.css';
 
 class Layout extends PureComponent {
+
   render() {
-    return 'layout';
+    const {header,footer} = this.props;
+    return (
+      <div>
+        {this.renderHeader(header)}
+        {this.renderFooter(footer)}
+      </div>
+    ); 
   }
 
   renderHeader(HeaderChild) {
-    return 'header';
+    console.log('HeaderChild',HeaderChild);
+    return <SectionTitle className ={'Header'} children = {HeaderChild}/>;
   }
 
   renderFooter(FooterChild) {
-    return 'footer';
+    return <SectionTitle className ={'Footer'} children = {FooterChild}/>;
   }
 }
 
