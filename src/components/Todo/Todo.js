@@ -13,7 +13,11 @@ export default class Todo extends PureComponent {
     const biggest = savedData.reduce((acc, el) => Math.max(acc, el.id), 0);
     return biggest + 1;
   }
-  handleChange = event => {};
+  handleChange = event => {
+    this.setState({
+      inputValue: event.target.value
+    });
+  };
 
   createNewRecordByEnter = event => {};
 
@@ -23,14 +27,23 @@ export default class Todo extends PureComponent {
 
   render() {
     return (
-      <Card title={'Список справ'}/>
+      <Card 
+          title={'Список справ'} 
+          children={
+                      <div>
+                        <input type="text" 
+                               className="todo-input t-input" 
+                               placeholder="Введіть задачу"  
+                               onChange={this.handleChange}/>
+                               
+                      </div>
+                    }
+        />
     );
   }
   
   renderEmptyRecord() {
-    return (
-      <input type="text"/>
-    )
+    return 0;
   }
 
   renderRecord = record => {
