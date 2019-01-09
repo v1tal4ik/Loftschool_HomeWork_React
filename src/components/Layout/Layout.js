@@ -5,22 +5,32 @@ import './Layout.css';
 class Layout extends PureComponent {
 
   render() {
-    const {header,footer} = this.props;
+    const {header,footer,children} = this.props;
     return (
       <div>
-        {this.renderHeader(header)}
-        {this.renderFooter(footer)}
+        {header && this.renderHeader(header)}
+        <main>
+        <SectionTitle className="header__title">Main</SectionTitle>
+        {children}
+        </main>
+        {footer && this.renderFooter(footer)}
       </div>
     ); 
   }
 
   renderHeader(HeaderChild) {
-    console.log('HeaderChild',HeaderChild);
-    return <SectionTitle className ={'Header'} children = {HeaderChild}/>;
+    return (
+      <header className="header">
+        <SectionTitle className="header__title">Header</SectionTitle>
+        <div className="header__content">
+          <HeaderChild />
+        </div>
+      </header>
+    );
   }
 
   renderFooter(FooterChild) {
-    return <SectionTitle className ={'Footer'} children = {FooterChild}/>;
+    return 'empty';
   }
 }
 

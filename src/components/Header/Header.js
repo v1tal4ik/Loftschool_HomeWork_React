@@ -6,7 +6,13 @@ import './Header.css';
 class Header extends PureComponent {
   render() {
     return (
-      <div>Header</div>
+      <AuthConsumer >
+        {
+          ({isAuthorized,email,logout})=>{
+            //какие дание - то и рендерить
+          })
+        }
+      </AuthConsumer>
     );
   }
 }
