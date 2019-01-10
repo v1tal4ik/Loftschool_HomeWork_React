@@ -19,36 +19,41 @@ export default class Todo extends PureComponent {
     });
   };
 
-  createNewRecordByEnter = event => {};
+  createNewRecordByEnter = event => {
+    const { savedData } = this.props;
+    //по кнопке enter запустить saveData и передать key , value + обнулить state
+  };
 
-  toggleRecordComplete = event => {};
+  toggleRecordComplete = event => {
+    //запустить savwData  и меняем флаг isComplete (true/false)
+  };
 
-  createNewRecord = () => {};
+  createNewRecord = () => {
+    //по кнопке enter запустить saveData и передать key , value
+  };
 
   render() {
     return (
-      <Card 
-          title={'Список справ'} 
-          children={
-                      <div>
-                        <input type="text" 
-                               className="todo-input t-input" 
-                               placeholder="Введіть задачу"  
-                               onChange={this.handleChange}/>
-                               
-                      </div>
-                    }
-        />
+      <Card title={'Список справ'}>
+            {renderEmptyRecord()}
+            {this.props.savedData.map(this.renderRecord)}
+        </Card>
     );
   }
   
   renderEmptyRecord() {
-    return 0;
+    return  <div>
+              <input type="text" 
+                className="todo-input t-input" 
+                placeholder="Введіть задачу"  
+                onChange={this.handleChange}/>
+            </div>;
   }
 
   renderRecord = record => {
+    //делает li + span при клике toggleRecordComplete()
     return 0;
   };
 }
 
-/*export default withLocalstorage('todo-app', [])(Todo);*/
+export default withLocalstorage('todo-app', [])(Todo);
