@@ -7,14 +7,14 @@ class Layout extends PureComponent {
   render() {
     const {header,footer,children} = this.props;
     return (
-      <div>
+      <Fragment>
         {header && this.renderHeader(header)}
-        <main>
-        <SectionTitle className="header__title">Main</SectionTitle>
+        <main className="main main--with-header main--with-footer">
+        <SectionTitle className="main__title">Main</SectionTitle>
         {children}
         </main>
         {footer && this.renderFooter(footer)}
-      </div>
+        </Fragment>
     ); 
   }
 
@@ -30,7 +30,14 @@ class Layout extends PureComponent {
   }
 
   renderFooter(FooterChild) {
-    return 'empty';
+    return (
+      <footer className="footer">
+        <SectionTitle className="footer__title">Footer</SectionTitle>
+        <div className="footer__content">
+          <FooterChild />
+        </div>
+      </footer>
+    );
   }
 }
 

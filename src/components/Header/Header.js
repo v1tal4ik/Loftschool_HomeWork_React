@@ -7,11 +7,14 @@ class Header extends PureComponent {
   render() {
     return (
       <AuthConsumer >
-        {
-          ({isAuthorized,email,logout})=>{
-            //какие дание - то и рендерить
-          })
-        }
+        {({ isAuthorized, email, logout }) =>
+              isAuthorized ? (
+                <div>
+                  {email}
+                  <Button className={'button.t-logout'} children={"Вийти"} onClick={logout}/>
+                </div>
+              ) : null
+            }
       </AuthConsumer>
     );
   }

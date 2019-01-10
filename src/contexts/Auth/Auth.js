@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 
 const { Provider, Consumer: AuthConsumer } = React.createContext('');
-const validEmail = 'student';
-const validPassword = 1123;
+const validEmail = 'student@oo.com';
+const validPassword = '123';
 
 class AuthProvider extends PureComponent {
 
@@ -14,22 +14,43 @@ class AuthProvider extends PureComponent {
   }
 
   authorize = (email,password)=>{
-    //проводить сравнение с валыдним емайл, и переписать state
-
-    //если все верно то autorize = true,  а если нет - authError 
+    if(email === validEmail && validPassword === password){
+      this.setState({
+        email: email,
+        isAuthorized: true
+      })
+    }else{
+      this.setState({
+        authorizeError:'Email или пароль введён не верно'
+      })
+    }
   }
 
   logout=()=>{
-    //обнуляет state
+    this.setState({
+      email:'',
+      authorizeError: '',
+      isAuthorized: false
+    })
   }
 
   getValue =()=>{
-    //возвращает state + logout + authorize
+    const {email,authorizeError,isAuthorized} = this.state;
+    const {authorize,logout} = this;
+
+    let obj = {
+      email: email,
+      authorizeError:authorizeError,
+      isAuthorized:isAuthorized,
+      authorize: authorize,
+      logout: logout
+    };
+    return obj;
   }
 
   render() {
     const { children } = this.props;
-    return <Provider value ={this.getValue}>{children}</Provider>;
+    return <Provider value ={this.getValue()}>{children}</Provider>;
   }
 }
 
