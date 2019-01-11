@@ -3,56 +3,111 @@ import Card from '../Card';
 import './Todo.css';
 import withLocalstorage from '../../HOCs/withLocalstorage';
 
-export default class Todo extends PureComponent {
+
+var counter;//счетчик записей
+class Todo extends PureComponent {
   state = {
     inputValue: ''
   };
   
   getId() {
-    const { savedData } = this.props;
-    const biggest = savedData.reduce((acc, el) => Math.max(acc, el.id), 0);
-    return biggest + 1;
+    const { loadData } = this.props;
+    const biggest = loadData().reduce((acc, el) => Math.max(acc, el.id), 0);
+    return biggest+1;
   }
+
+
   handleChange = event => {
     this.setState({
       inputValue: event.target.value
     });
   };
 
-  createNewRecordByEnter = event => {
-    const { savedData } = this.props;
-    //по кнопке enter запустить saveData и передать key , value + обнулить state
+  createNewRecordByEnter = e => {
+    if(e.keyCode === 13){
+       this.createNewRecord(e);
+       e.target.value ='';
+    }
   };
 
-  toggleRecordComplete = event => {
-    //запустить savwData  и меняем флаг isComplete (true/false)
+  toggleRecordComplete = e => {
+    const { saveData, loadData} = this.props;
+    let inputValue = e.target.previousElementSibling.textContent;
+    
+    loadData().forEach((el,index)=>{
+      if(el.text === inputValue){
+        let props ={
+          complete: true,
+          index:index
+        }
+        saveData(el.id,inputValue,props);
+      }
+
+      this.setState({change: Math.random()});
+    })
   };
 
-  createNewRecord = () => {
-    //по кнопке enter запустить saveData и передать key , value
+  createNewRecord = (e) => {
+    const { saveData } = this.props;
+    const {inputValue} = this.state;
+
+    counter = this.getId();
+
+    let props ={
+      complete: false
+    }
+
+    saveData(counter,inputValue,props);
+
+      this.setState({inputValue:''});
+      e.target.previousElementSibling ?  e.target.previousElementSibling.value = '': null;
   };
 
   render() {
     return (
       <Card title={'Список справ'}>
-            {renderEmptyRecord()}
-            {this.props.savedData.map(this.renderRecord)}
+            {this.renderEmptyRecord()}
+            {this.renderRecord()}
         </Card>
     );
   }
   
   renderEmptyRecord() {
-    return  <div>
-              <input type="text" 
-                className="todo-input t-input" 
-                placeholder="Введіть задачу"  
-                onChange={this.handleChange}/>
+    return  <div className='todo t-todo-list'>
+              <div className ="todo-item todo-item-new">
+                  <input type="text" 
+                    className="todo-input t-input" 
+                    placeholder="Введіть задачу"  
+                    onChange={this.handleChange}
+                    onKeyDown ={this.createNewRecordByEnter}/>
+                    <span className="plus t-plus" onClick={this.createNewRecord}>+</span>
+              </div>
             </div>;
   }
 
+
+  // &#10003; &#8722;
+
   renderRecord = record => {
     //делает li + span при клике toggleRecordComplete()
-    return 0;
+    const {loadData} = this.props;
+    let items = loadData();
+    if (items){
+      return (
+        <div className="todo t-todo-list">
+          {items.map((el)=>{
+            let icon;
+            el.isComplete ? icon = 'done' : icon = 'undone';
+            return <div className='todo-item t-todo' key={el.text}>
+                          <div>{el.text}</div>
+                          <span className="todo-item__flag t-todo-complete-flag" onClick={this.toggleRecordComplete}>
+                          {icon}
+                          </span>
+                    </div>
+          })}
+        </div>
+      )
+    }
   };
 }
 
