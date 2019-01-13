@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import Card from '../Card';
 import './Todo.css';
 import withLocalstorage from '../../HOCs/withLocalstorage';
@@ -36,8 +36,10 @@ class Todo extends PureComponent {
     
     loadData().forEach((el,index)=>{
       if(el.text === inputValue){
+        let toggleComplete = el.isComplete;
+        toggleComplete  ? toggleComplete = false: toggleComplete = true;
         let props ={
-          complete: true,
+          complete: toggleComplete,
           index:index
         }
         saveData(el.id,inputValue,props);
@@ -96,12 +98,10 @@ class Todo extends PureComponent {
       return (
         <div className="todo t-todo-list">
           {items.map((el)=>{
-            let icon;
-            el.isComplete ? icon = 'done' : icon = 'undone';
             return <div className='todo-item t-todo' key={el.text}>
                           <div>{el.text}</div>
                           <span className="todo-item__flag t-todo-complete-flag" onClick={this.toggleRecordComplete}>
-                          {icon}
+                          { el.isComplete ? <Fragment>&#10003;</Fragment> : <Fragment> &#8722;</Fragment> }
                           </span>
                     </div>
           })}
