@@ -1,55 +1,103 @@
-describe('localstorage-hoc', () => {
+describe('Mail app', () => {
   beforeEach(() => {
-    cy.visit('/')
-  })
+    cy.visit('/');
+  });
 
-  describe('Поведение одной записи', () => {
-    it('Создает запись с текстом в инпуте по клику на кнопку +', () => {
-      cy.get('.t-input').type('Купить молоко')
-      cy.get('.t-plus').click()
+  function login() {
+    cy.get('.t-input-email').type('test@test.ru');
+    cy.get('.t-input-password').type('321');
+    cy.get('.t-login').click();
+  }
 
-      cy.get('.t-todo').should('contain', 'Купить молоко')
-    })
+  function checkNav() {
+    cy.get('.t-nav-list');
+    cy.get('.t-link-home');
+    cy.get('.t-link-inbox');
+    cy.get('.t-link-outbox');
+  }
 
-    it('Создает запись с текстом в инпуте по нажатию enter', () => {
-      cy.get('.t-input').type('Купить молоко')
-      cy.get('.t-input').type('{enter}')
+  function goToOutboxEmail() {
+    cy.get('.t-link-outbox').click();
+    cy.get('[href="/app/outbox/rPeMc6ViYknygqyQnjXuPHRq"]').click();
+    cy.url().should(
+      'eq',
+      `${Cypress.config().baseUrl}/app/outbox/rPeMc6ViYknygqyQnjXuPHRq`
+    );
+  }
 
-      cy.get('.t-todo').should('contain', 'Купить молоко')
-    })
+  function goToInboxEmail() {
+    cy.get('.t-link-inbox').click();
+    cy.get('[href="/app/inbox/yGmwergEGcxbgssBXsVGyH6b"]').click();
+    cy.url().should(
+      'eq',
+      `${Cypress.config().baseUrl}/app/inbox/yGmwergEGcxbgssBXsVGyH6b`
+    );
+  }
 
-    it('По клику на флаг меняет статус', () => {
-      cy.get('.t-input').type('Купить молоко')
-      cy.get('.t-plus').click()
-      cy.get('.t-todo-complete-flag').click()
+  it('При открытии сайта открывается форма', () => {
+    cy.get('.t-form');
+  });
 
-      cy.get('.t-todo-complete-flag').should('contain', 'x')
-    })
+  it('При вводе данных происходит логин и редирект на /app', () => {
+    login();
+    cy.url().should('eq', `${Cypress.config().baseUrl}/app`);
+  });
 
-    it('При двух кликах флаг записи меняется и возвращается', () => {
-      cy.get('.t-input').type('Купить молоко')
-      cy.get('.t-plus').click()
-      cy.get('.t-todo-complete-flag').click()
-      cy.get('.t-todo-complete-flag').click()
+  it('На странице /app присутствует навигация', () => {
+    login();
+    checkNav();
+  });
 
-      cy.get('.t-todo-complete-flag').should('not.contain', 'x')
-    })
-  })
+  it('На странице /app присутствует приветствие', () => {
+    login();
+    cy.get('.t-greeting');
+  });
 
-  describe('Localstorage', () => {
-    it ('При перезагрузке страницы все записи сохраняются', () => {
-      cy.get('.t-input').type('Купить молоко')
-      cy.get('.t-plus').click()
-      cy.get('.t-input').type('Купить хлеб')
-      cy.get('.t-plus').click()
-      cy.get('.t-input').type('Купить чай')
-      cy.get('.t-plus').click()
-      cy.get('.t-input').type('Купить лимон')
-      cy.get('.t-plus').click()
+  it('При переходе в инбокс показывается список отправленных писем', () => {
+    login();
+    cy.get('.t-link-inbox').click();
+    cy.get('.t-inbox-list');
+  });
 
-      cy.visit('/')
+  it('При переходе в инбокс url — /app/inbox', () => {
+    login();
+    cy.get('.t-link-inbox').click();
+    cy.url().should('eq', `${Cypress.config().baseUrl}/app/inbox`);
+  });
 
-      cy.get('.t-todo-list').find('.t-todo').should('have.length', 4)
-    })
-  })
-})
+  it('При переходе в аутбокс показывается список отправленных писем', () => {
+    login();
+    cy.get('.t-link-outbox').click();
+    cy.get('.t-outbox-list');
+  });
+
+  it('При переходе в аутбокс url — /app/outbox', () => {
+    login();
+    cy.get('.t-link-outbox').click();
+    cy.url().should('eq', `${Cypress.config().baseUrl}/app/outbox`);
+  });
+
+  it('При переходе в письмо из аутбокса url меняется на /app/outbox/:id письма', () => {
+    login();
+    goToOutboxEmail()
+  });
+
+  it('В аутбокс письме есть поле to и тело письма', () => {
+    login();
+    goToOutboxEmail()
+    cy.get('.t-mail-to')
+    cy.get('.t-mail-body')
+  });
+
+  it('При переходе в письмо из инбокса url меняется на /app/inbox/:id письма', () => {
+    login();
+    goToInboxEmail()
+  });
+
+  it('В инбокс письме есть поле from и тело письма', () => {
+    login();
+    goToInboxEmail()
+    cy.get('.t-mail-from')
+    cy.get('.t-mail-body')
+  });
+});
