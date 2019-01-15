@@ -1,6 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import RootRouter from './components/RootRouter';
+import App from './components/App';
+import { Provider } from 'react-redux';
 import './index.css';
+import createStore from './store';
 
-ReactDOM.render(<RootRouter />, document.getElementById('root'));
+const store = createStore();
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);

@@ -5,8 +5,8 @@ body,
 }
 
 html {
-  background-color: #0F1C2C;
-  color: #F9BF4D;
+  background-color: #333;
+  color: #ACE66E;
 }
 
 body {
@@ -22,6 +22,6 @@ code {
 }
 
 a {
-  color: #00D2E9;
+  color: #4CD0FF;
   text-decoration-color: rgba(0, 210, 233, 0.5);
 }
