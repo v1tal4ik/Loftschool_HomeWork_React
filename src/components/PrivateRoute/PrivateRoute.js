@@ -7,6 +7,21 @@ class PrivateRoute extends Component {
   // Он должен проверять статус авторизации
   // и перенаправлять пользователя на страницу логина,
   // если тот не авторизован.
+  render(){
+    const {isAuthorized} =this.props;
+    const {component: RouteCmponent,...rest} = this.props;
+    return (
+      <Route 
+          {...rest}
+          render ={props =>
+            isAuthorized ? <RouteCmponent {...props} />: <Redirect to="/"/>
+          }
+      />
+    )
+  }
+  
 }
+
+
 
 export default withAuth(PrivateRoute);
