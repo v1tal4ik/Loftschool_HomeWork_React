@@ -12,11 +12,12 @@ import {
 // ключ error записать ошибку из searchMiddlewares
 const initialState = {
     isFetching:false,
-    result:['1'],
+    result:[],
     error:null
 }
 
 export default (state=initialState,action)=>{
+    console.log(action);
     switch(action.type){
         case searchRequest.toString():
             return {
@@ -42,7 +43,3 @@ export default (state=initialState,action)=>{
         
     }
 }
-
-export const getResult=(state)=>state.search.result;
-//get isFeyching
-// get error

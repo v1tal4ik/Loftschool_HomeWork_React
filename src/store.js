@@ -8,7 +8,7 @@ import searchMiddlewares from 'middlewares/searchMiddleware';
 
 export default  (initialState) =>createStore(RouterReducer,initialState,
     compose(
-        applyMiddleware(searchMiddlewares),
+        applyMiddleware(searchMiddlewares,showMiddlewares),
         window.devToolsExtension
         ? window.__REDUX_DEVTOOLS_EXTENSION__()
         : noop => noop

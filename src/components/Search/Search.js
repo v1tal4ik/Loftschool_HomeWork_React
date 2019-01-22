@@ -1,7 +1,9 @@
-import React, {Component} from 'react';
+import React, {Component,Fragment} from 'react';
 import {connect} from 'react-redux';
 import {searchRequest} from '../../actions';
-import getResult from '../../reducers/search-reducer';
+import ShowPreview from '../ShowPreview';
+import './Search.css';
+
 
 
 // Реализуйте страницу поиска.
@@ -23,34 +25,34 @@ class Search extends Component{
 
     submitSearch=()=>{
         //запустить action SearchRequest и передать inputValue 
-        const {inputValue} = this.props; 
+        const {inputValue} = this.state; 
         const {searchRequest} = this.props;
         searchRequest(inputValue);
 
+        
         this.setState({
             inputValue:''
         })
     }
 
     render(){
-        const {result,isFetching,error} = this.props;
-
-        if(isFetching) return <p>Дание загружаються...</p>;
-        if(error) return <p>Произошла сетевая ошибка</p>
+        const {result,isFetching,error} = this.props.search;
 
         return (
-            <div>
-                <input type='text' placeholder='Введите название фильма...' onChange={this.hangleInput}/>
-                <button onClick={this.submitSearch}>Найти</button>
-            </div>
+            <Fragment>
+                <div className='search-block'>
+                    <input type='text'className='search-inpt' placeholder='Введите название фильма...' onChange={this.hangleInput}/>
+                    <button className='search-btn' onClick={this.submitSearch}>Найти</button>
+                </div>
+                {
+                    <ShowPreview result={result}/>
+                }
+            </Fragment>
         )
     }
 }
 
-//return {result: getResult(state),isFetching:getFetching(state), Error:getError(state)}
-const mapStateToProps = state => ({
-    result: getResult(state)
-  });
-const mapDispatchToProps = {searchRequest};
+const mapStateToProps = state => state;
+const mapDispatchToProps ={searchRequest};
 
-export default connect(mapDispatchToProps,mapStateToProps)(Search);
+export default connect(mapStateToProps,mapDispatchToProps)(Search);

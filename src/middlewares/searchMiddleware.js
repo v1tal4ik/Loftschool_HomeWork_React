@@ -4,8 +4,6 @@ import {
     searchSuccess,
     searchFailure
 } from '../actions.js';
-//import 3-ех actions
-
 
 // Реализуйте searchMiddleware
 // Обратите внимание на файл `searchMiddleware.test.js`
@@ -19,6 +17,7 @@ import {
 
 export default (store)=>(next)=>(action)=>{
     if(action.type === searchRequest.toString()){
+        console.log(action);
         search(action.payload).then((data)=>{
             store.dispatch(searchSuccess(data));
         })
