@@ -1,58 +1,58 @@
-import React, {Component,Fragment} from 'react';
-import {connect} from 'react-redux';
-import {searchRequest} from '../../actions';
-import ShowPreview from '../ShowPreview';
-import './Search.css';
+import React, { PureComponent } from 'react';
+import styles from './Search.module.css';
+import Input from '../Input';
+import { connect } from 'react-redux';
+import { fetchRequest as fetchUserRequest } from '../../modules/User';
+import { fetchRequest as fetchFollowersRequest } from '../../modules/Followers';
+import UserInfo from '../UserInfo';
+import Followers from '../Followers';
 
+class Search extends PureComponent {
+  state = {
+    user: ''
+  };
 
+  input = React.createRef();
 
-// Реализуйте страницу поиска.
+  handleChange = event => {
+    this.setState({ user: event.target.value });
+  };
 
-// Используйте метод connect и mapStateToProps, mapDispatchToProps,
-// чтобы получить ссылку на поле search вашего стейта
-// и экшн searchRequest.
-class Search extends Component{
-    
-    state={
-        inputValue:''
+  handleKeyPress = event => {
+    const { fetchUserRequest, fetchFollowersRequest } = this.props;
+    const { user } = this.state;
+
+    if (event.key === 'Enter' && user.length > 0) {
+      fetchUserRequest(user);
+      fetchFollowersRequest(user);
     }
+  };
 
-    hangleInput=e=>{
-        this.setState({
-            inputValue:e.target.value
-        })
-    }
+  componentDidMount() {
+    this.input.current.focus();
+  }
 
-    submitSearch=()=>{
-        //запустить action SearchRequest и передать inputValue 
-        const {inputValue} = this.state; 
-        const {searchRequest} = this.props;
-        searchRequest(inputValue);
+  render() {
+    const { user } = this.state;
 
-        
-        this.setState({
-            inputValue:''
-        })
-    }
-
-    render(){
-        const {result,isFetching,error} = this.props.search;
-
-        return (
-            <Fragment>
-                <div className='search-block'>
-                    <input type='text'className='search-inpt' placeholder='Введите название фильма...' onChange={this.hangleInput}/>
-                    <button className='search-btn' onClick={this.submitSearch}>Найти</button>
-                </div>
-                {
-                    <ShowPreview result={result}/>
-                }
-            </Fragment>
-        )
-    }
+    return (
+      <div className={styles.root}>
+        <Input
+          ref={this.input}
+          value={user}
+          className='t-search-input'
+          placeholder="Ник пользователя"
+          onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress}
+        />
+        <UserInfo />
+        <Followers />
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = state => state;
-const mapDispatchToProps ={searchRequest};
-
-export default connect(mapStateToProps,mapDispatchToProps)(Search);
+export default connect(
+  undefined,
+  { fetchUserRequest, fetchFollowersRequest }
+)(Search);
