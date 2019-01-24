@@ -1,4 +1,3 @@
-export { default } from './reducer';
-export * from './reducer';
+export { default } from './auth';
+export * from './auth';
 export * from './actions';
-

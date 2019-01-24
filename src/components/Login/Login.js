@@ -1,72 +1,67 @@
 import React, { PureComponent } from 'react';
-import styles from './Login.module.css';
-import { getIsAuthorized, addApiKey } from '../../modules/Auth';
-import { connect } from 'react-redux';
-import { withRouter, Redirect } from 'react-router-dom';
-import Input from '../Input';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  root: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    width: 400
+  },
+  paragraph: {
+    width: '100%',
+    textAlign: 'center'
+  },
+  input: {
+    width: '100%'
+  }
+});
 
 class Login extends PureComponent {
-  // на время разработки свой access token можно вставить сюда, чтобы
-  // не вводить каждый раз
   state = {
-    key: ''
+    inputValue: ''
   };
-
-  input = React.createRef();
-
   handleChange = event => {
-    this.setState({ key: event.target.value });
+    this.setState({ inputValue: event.target.value });
   };
 
   handleKeyPress = event => {
-    const { addApiKey } = this.props;
-    const { key } = this.state;
+    const { inputValue } = this.state;
+    const { onEnter } = this.props;
 
-    if (event.key === 'Enter') addApiKey(key);
+    if (event.key === 'Enter') {
+      onEnter(inputValue);
+    }
   };
-
-  componentDidMount() {
-    this.input.current.focus();
-  }
-
   render() {
-    const { isAuthorized } = this.props;
-    const { key } = this.state;
-
-    if (isAuthorized) return <Redirect to="/search" />;
-
+    const { classes } = this.props;
+    const { inputValue } = this.state;
     return (
-      <div className={styles.root}>
-        <h1>Токен авторизации</h1>
-        <p className={styles.p}>
-          Получить токен нужно на своей странице github, перейдите по{' '}
+      <Paper className={classes.root}>
+        <Typography className={classes.paragraph} component="p">
+          Для получения ключа авторизации необходимо зарегестрироваться на сайте{' '}
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://github.com/settings/tokens"
+            href="https://api.nasa.gov/api.html#authentication"
           >
-            адресу
-          </a>{' '}
-          и создать себе токен. Запишите куда нибудь токен, так как после
-          создания доступ к нему будет только один раз.
-        </p>
-
-        <Input
-          ref={this.input}
-          value={key}
-          placeholder="access token"
-          className='t-login-input'
+            NASA
+          </a>
+        </Typography>
+        <TextField
+          value={inputValue}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
+          className={classes.input}
+          label="Nasa API Key"
+          margin="dense"
         />
-
-        <p>После ввода нажмите Enter</p>
-      </div>
+      </Paper>
     );
   }
 }
 
-export default connect(
-  state => ({ isAuthorized: getIsAuthorized(state) }),
-  { addApiKey }
-)(withRouter(Login));
+export default withStyles(styles)(Login);
