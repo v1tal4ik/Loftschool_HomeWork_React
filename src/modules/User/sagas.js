@@ -8,6 +8,7 @@ function* fetchUserWatcher() {
 }
 
 export function* fetchUserFlow(action) {
+  console.log('action',action);
   try{
     const apiKey = yield select(getApiKey);
     const result = yield call(getUserInfo,apiKey,action.payload);
