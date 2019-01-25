@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import styles from './Search.module.css';
 import Input from '../Input';
 import { connect } from 'react-redux';
-import { fetchRequest as fetchUserRequest } from '../../modules/User';
-import { fetchRequest as fetchFollowersRequest } from '../../modules/Followers';
+import {fetchUserRequest} from '../../modules/User/actions';
+import {fetchFollowersRequest} from '../../modules/Followers/actions';
 import UserInfo from '../UserInfo';
 import Followers from '../Followers';
 

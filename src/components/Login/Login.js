@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import styles from './Login.module.css';
-import { getIsAuthorized, addApiKey } from '../../modules/Auth';
+import { getIsAuthorized} from '../../modules/Auth/reducer';
+import { addApiKey} from '../../modules/Auth';
 import { connect } from 'react-redux';
 import { withRouter, Redirect } from 'react-router-dom';
 import Input from '../Input';
@@ -20,7 +21,8 @@ class Login extends PureComponent {
 
   handleKeyPress = event => {
     const { addApiKey } = this.props;
-    const { key } = this.state;
+    //const { key } = this.state;
+    const key = ' 0a1781786538fcf5d01c42a38a8488e0cba5ce94';
 
     if (event.key === 'Enter') addApiKey(key);
   };
