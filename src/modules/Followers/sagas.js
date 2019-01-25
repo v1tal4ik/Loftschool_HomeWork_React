@@ -1,7 +1,7 @@
 import { takeLatest, select, put, call, fork } from 'redux-saga/effects';
 import {fetchFollowersRequest,fetchFollowersSuccess,fetchFollowersFailure} from './actions';
 import {getFollowersInfo} from './api';
-import getApiKey from '../Auth/reducer';
+import {getApiKey} from '../Auth/reducer';
 
 
 function* fetchFollowersWatcher() {

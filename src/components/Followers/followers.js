@@ -6,14 +6,19 @@ import cx from 'classnames';
 
 class Followers extends PureComponent {
   render() {
-    // Покажите статус загрузки
-    // Если данные не были загружены - сообщите об этом пользователю
-    const {isLoading,data} =this.props;
+    const {isLoading,data} = this.props;
+
+    if (!data) return <p className="t-no-user-info">Нет информации о followers</p>
+
     return (
-      <div className={cx(styles.root, 't-followers')}>
-     {isLoading ?  <p>Загрузка...</p>: null}
-     {data !==null && data.length > 0 ? <p>true</p> : <p>Нет информации о followers</p>}
-      </div>
+        <div className={cx(styles.root, 't-followers')}>
+            {data.map(follower => (
+                <div key={follower.id}>
+                    <img src={follower.avatar_url} />
+                    <p>{follower.login}</p>
+                </div>
+            ))}
+        </div>
     );
   }
 }
