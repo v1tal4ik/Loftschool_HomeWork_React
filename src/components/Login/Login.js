@@ -29,11 +29,11 @@ class Login extends PureComponent {
   };
 
   handleKeyPress = event => {
-    const { inputValue } = this.state;
+    //const { inputValue } = this.state;
     const { onEnter } = this.props;
 
     if (event.key === 'Enter') {
-      onEnter(inputValue);
+      onEnter('Cxt14mBAEDgMljriHhSI71688ScaD3JbPRoPWUGF');
     }
   };
   render() {

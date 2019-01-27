@@ -5,6 +5,7 @@ import Slider from '@material-ui/lab/Slider';
 import Typography from '@material-ui/core/Typography';
 import debounce from 'debounce';
 
+
 const styles = {
   root: {
     width: 500,
@@ -27,7 +28,7 @@ class SelectSol extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.changePropsSol = debounce(this.changePropsSol, 100);
+    this.changePropsSol = debounce(this.changePropsSol, 500);
   }
 
   handleChange = (_e, sol) => {
@@ -41,6 +42,7 @@ class SelectSol extends PureComponent {
   }
 
   render() {
+    //console.log('SelectSol ',this.props);
     const { minSol, maxSol, classes } = this.props;
     const { sol } = this.state;
     return (
