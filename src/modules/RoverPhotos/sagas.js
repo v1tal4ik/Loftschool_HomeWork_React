@@ -10,7 +10,7 @@ function* CheckEarlyRequest (action){
     const state = yield select(getPhotosRover);
     const result = state[name].hasOwnProperty(sol);
     console.log(result);
-    if(result){
+    if(false){
         console.log('true');
     }else{
         console.log('call fetchPhotosFlow');
