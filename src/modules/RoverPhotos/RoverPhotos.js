@@ -1,8 +1,10 @@
 import {combineReducers } from 'redux';
 import {handleActions} from 'redux-actions';
 import {changeSol,fetchPhotosRequest,fetchPhotosSuccess,fetchPhotosFailure} from './actions';
+import produce from 'immer';
 
 
+export const names = ['curiosity','opportunity','spirit'];
 
 const sol = handleActions({
     [changeSol] : (_state,action) => ({
@@ -18,9 +20,36 @@ const sol = handleActions({
 
 const photos = handleActions({
     [fetchPhotosRequest]: (_state,action)=>{
-        return action.payload.name ={
-            [action.payload.sol]:{isLoading:true,isLoaded:false,photos:[]}
-        }
+        const{name,sol} = action.payload;
+        return produce(_state,draft=>{
+            draft[name][sol]={
+                isLoading:true,
+                isLoaded:false,
+                photos:[]
+            }
+        })
+    },
+    [fetchPhotosSuccess]: (_state,action)=>{
+        const {name,sol,photos} = action.payload;
+
+        return produce(_state, draft=>{
+            draft[name][sol]={
+                isLoading:false,
+                isLoaded:true,
+                photos:photos
+            }
+        });
+    },
+    [fetchPhotosFailure]:(_state,action)=>{
+        const {name,sol,error} = action.payload;
+
+        return produce(_state,draft=>{
+            draft[name][sol]={
+                isLoading:false,
+                isLoaded:false,
+                error:error
+            }
+        })
     }
 },{
     curiosity:{},
@@ -30,10 +59,11 @@ const photos = handleActions({
 
 
 export const getSol =(state)=>state.roverPhotos.sol;
+export const getPhotosRover = (state) => state.roverPhotos.photos;
+
 
 
 export default combineReducers({
     sol,
     photos
 });
-

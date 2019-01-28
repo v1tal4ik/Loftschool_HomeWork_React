@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import {connect } from 'react-redux';
 import SelectSol from '../SelectSol/SelectSol';
-import {getSol} from '../../modules/RoverPhotos/RoverPhotos';
-import {changeSol,fetchPhotosRequest} from '../../modules/RoverPhotos';
+import RoverPhotos from '../RoverPhotos/RoverPhotos';
+import styles from './RoversViewer.module.css';
+import {
+    changeSol,
+    fetchPhotosRequest,
+    getSol,
+    getPhotosRover,
+    names
+} from '../../modules/RoverPhotos';
+
 
 // Здесь вам нужно реализовать вью
 
@@ -15,31 +23,57 @@ import {changeSol,fetchPhotosRequest} from '../../modules/RoverPhotos';
 
 class RoversViewer extends Component{
 
-    componentDidMount(){
-        console.log('work-2');
+    componentDidMount(){this.photoLoad()};
+
+    componentDidUpdate(prevProps){
+        const {sol:{current}} = this.props;
+        const lastValue = prevProps.sol.current;
+
+        current!== lastValue ? this.photoLoad(): console.log('');
     }
 
-    click(){
-        console.log('click');
-        fetchPhotosRequest('olal',12);
+    photoLoad(){
+        const {fetchPhotosRequest,sol:{current}} = this.props;
+        names.forEach((name)=>{
+           fetchPhotosRequest({name,sol:current}); 
+        });
     }
+
+
+    renderPhotos(){
+        const {sol:{current},photos}=this.props;
+        const empty = [];
+        
+        return (
+                names.map(name =>{
+                    return <RoverPhotos 
+                        key={name}
+                        name={name}
+                        photos={
+                            (photos[name][current] !== undefined && photos[name][current].photos.length!==0 )? photos[name][current].photos: empty
+                        }
+                        />
+                })
+            )
+    }
+
 
     render(){
-        console.log(this.props);
-        const {changeSol ,sol:{current,min,max}} = this.props;
+        const {changeSol ,sol:{current,min,max},photos} = this.props;
         return (
-            <div>
+            <div className={styles.root}>
                 <SelectSol selectedSol={current} minSol={min} maxSol={max}  changeSol={changeSol}/>
-                <button onClick={this.click}>click</button>
+                <div className={styles.containerRovers}>{this.renderPhotos()}</div>
             </div>
             )
     }
 }
 
 const mapStateToProps =(state)=>({
-        sol:getSol(state)
+        sol:getSol(state),
+        photos:getPhotosRover(state)
 });
 
 const mapDispatchToProps = {changeSol,fetchPhotosRequest};
 
-export default connect(mapStateToProps,mapDispatchToProps)(RoversViewer);
+export default connect(mapStateToProps,mapDispatchToProps)(RoversViewer);         
