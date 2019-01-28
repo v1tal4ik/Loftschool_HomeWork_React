@@ -23,4 +23,4 @@ export default combineReducers({
 });
 
 export const getIsLoading=(state)=>state.user.isLoading;
-export const getData=(state)=>state.user.data;
+export const getData=(state)=>state.followers.data;

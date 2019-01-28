@@ -7,6 +7,7 @@ import cx from 'classnames';
 class Followers extends PureComponent {
   render() {
     const {isLoading,data} = this.props;
+    console.log(this.props);
 
     if (!data) return <p className="t-no-user-info">Нет информации о followers</p>
 
@@ -28,3 +29,6 @@ export default connect(state => ({
   isLoading: getIsLoading(state),
   data: getData(state)
 }))(Followers);
+/*
+
+            */
