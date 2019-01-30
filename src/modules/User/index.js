@@ -1,4 +1,3 @@
-export { default } from './reducer';
-export * from './reducer';
+export { default } from './user';
+export * from './user';
 export * from './actions';
-export { default as sagas } from './sagas';

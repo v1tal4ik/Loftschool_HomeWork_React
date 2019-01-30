@@ -1,26 +1,24 @@
-import React,{Component} from 'react';
+import React ,{ Component }from 'react';
 import {BrowserRouter,Route,Redirect,Switch} from 'react-router-dom';
-import Login from '../Login/Login';
-import Search from '../Search/Search';
-// Реализуйте роутер
+import Login from '../Login';
+import App from '../App';
 
-// Роутер должен иметь роуты для компонентов Login и Search
-// Вам потребуется использовать PrivateRoute для Search
-// По умолчанию нужно перенаправлять на страницу логина
+//це роутер, який перенаправляє по компонентах
+//компоненти Login і App
 
-class Router extends Component {
+
+class Router extends Component{
     render(){
         return (
             <BrowserRouter>
-                <Switch>
-                    <Route path='/' component={Login} exact />
-                    <Route path='/search' component={Search} exact />
-                    <Redirect to='/' />
-                </Switch>            
+            <Switch>
+                <Route path='/' component={Login}  exact/>
+                <Route path='/app' component={App}  exact/>
+                <Redirect to='/' />
+            </Switch>
             </BrowserRouter>
         )
     }
 }
-
 
 export default Router;

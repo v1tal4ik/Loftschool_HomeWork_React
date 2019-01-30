@@ -1,4 +1,4 @@
 import { createAction } from 'redux-actions';
 
-// Реализуйте ADD_API_KEY action
-export const addApiKey = createAction('AUTH/ADD_API_KEY');
+export const successAuth = createAction('AUTH/SUCCESS_AUTH');
+export const errorAuth = createAction('AUTH/ERROR_AUTH');
