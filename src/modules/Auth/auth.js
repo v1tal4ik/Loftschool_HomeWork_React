@@ -1,6 +1,6 @@
 import {combineReducers } from 'redux';
 import {handleActions} from 'redux-actions';
-import {successAuth,errorAuth} from './actions';
+import {successAuth,errorAuth,exitAuth} from './actions';
 
 
 
@@ -11,10 +11,12 @@ const password = handleActions({},'321');
 const isAuthorize = handleActions({
     [successAuth]:()=>true,
     [errorAuth]:()=>false,
-},false);
+    [exitAuth]:()=>false
+},true);
 
 const error = handleActions({
-    [errorAuth]:()=>'Не вений login или password',
+    [errorAuth]:()=>'* Логін або пароль введено не вірно',
+    [exitAuth]:()=>''
 },''); 
 
 

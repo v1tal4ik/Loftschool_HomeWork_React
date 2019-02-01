@@ -4,8 +4,8 @@ body,
   height: 100%;
 }
 
-html {
-  background-color: #EEEEEE;
+html,body{
+  background-color: #dbdde0;
 }
 
 body {

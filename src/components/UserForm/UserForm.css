@@ -1,6 +1,7 @@
-.login-form{
+.user-form{
     position: fixed;
-    width: 300px;
+    width: 80%;
+    height: 350px;
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
@@ -13,31 +14,42 @@
     0px 1px 10px 1px rgba(0,0,0,0.1) inset;
 }
 
-.login-form-title{
-   text-align: center;
-   margin: 0;
-   font-size: 24px;
+.user-form-title{
+    text-align: center;
+    font-size: 26px;
+    margin: 0;
+}
+
+.inp-block{
+    width: 50%;
+    display: inline-block;
+    margin-bottom: 30px;
+    
 }
 
 
-.login-form-input{
-    margin-top: 20px;
-    margin-bottom: 25px;
+.user-form-label{
+    color:#a0a4aa;
+}
+
+.user-form-input{
+    width: 90%;
     font-size: 18px;
+    margin-top: 10px;
     border: none;
     border-bottom: 1px solid #000;
     background-color: #fff !important;
     outline: none;
-
 }
 
-.login-form-input:focus{
+.user-form-input:focus{
     border-bottom: 1px solid #6c96d8;
 }
 
-.login-form-btn{
+.user-form-btn{
     padding: 10px 15px;
     margin-top: 10px;
+    margin-bottom: 20px;
     background: #fff;
     border: 1px solid #6c96d8;
     outline:none;
@@ -46,12 +58,16 @@
     transition: all 0.3s ease;
 }
 
-.login-form-btn:hover{
+.user-form-btn:hover{
     background: #6c96d8;
     color:#fff;
 }
 
-.login-form-error{
+.user-form-error{
     margin: 0;
     color:#e01c18;
+}
+
+.user-form-link{
+    text-decoration:none;
 }

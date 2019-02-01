@@ -1,14 +1,7 @@
 import { combineReducers } from 'redux';
-import { fork } from 'redux-saga/effects';
 import auth from './Auth';
 import user from './User';
-//import roverPhotos, { sagas as roverSagas } from './RoverPhotos';
+import map from './Map';
 
 
-//all reducers
-export default combineReducers({ auth,user });
-
-//all Saga
-/*export function* rootSaga() {
-  yield fork(roverSagas);
-}*/
+export default combineReducers({ auth,user,map});

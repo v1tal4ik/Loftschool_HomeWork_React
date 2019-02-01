@@ -1,24 +1,20 @@
-import React ,{Component,Fragment} from 'react';
+import React ,{ Component,Fragment}from 'react';
 import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getIsAuthorize} from '../../modules/Auth/auth';
 import TopMenu from '../TopMenu/TopMenu';
-import MapBox from '../MapBox/MapBox';
-import OrderWindow from '../OrderWindow/OrderWindow';
-import './App.css';
-
-class App extends Component{
+import UserForm from '../UserForm/UserForm';
+import './Profile.css';
 
 
-
+class Profile extends Component{
     render(){
-        const {isAuthorize} = this.props
+        const {isAuthorize} =this.props
         if(!isAuthorize) return <Redirect to='/' />;
         return (
             <Fragment>
                 <TopMenu />
-                <MapBox />
-                <OrderWindow />
+                <UserForm />
             </Fragment>
         )
     }
@@ -29,7 +25,4 @@ export default connect(
         isAuthorize:getIsAuthorize(state)
     }),
     {}
-)(App);
-
-/*<button className='btn' onClick={this.call}>Click</button>*/
-/**/
+)(Profile);

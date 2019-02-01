@@ -1,8 +1,10 @@
 import React ,{ Component,Fragment}from 'react';
-import {Redirect} from 'react-router-dom';
+import {Link,Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getLogin,getPassword,getIsAuthorize,getError} from '../../modules/Auth/auth';
 import {successAuth,errorAuth} from '../../modules/Auth/actions';
+import TopMenu from '../TopMenu/TopMenu';
+import './Login.css';
 
  
 
@@ -18,10 +20,14 @@ class Login extends Component{
     }
 
     handlePressEnter=(e)=>{
-        e.preventDefault();
        const {login,password,successAuth,errorAuth} = this.props;
        const {current_login,current_password} = this.state;
-       (login === current_login && password===current_password) ? successAuth(): errorAuth();
+       if(login === current_login && password===current_password){
+           successAuth();
+       }else{
+           e.preventDefault(); 
+           errorAuth();
+       }
     }
 
 
@@ -29,16 +35,19 @@ class Login extends Component{
         const{isAuthorize,error}=this.props;
 
         if(isAuthorize) return <Redirect to='/app' />;
-    //console.log(this.props);
         return (
         <Fragment>
-            <form>
-                Логин: <br />
-                <input name="login" type="text" size="25"  onChange={this.handleChange}/> <br />
-                Пароль: <br />
-                <input name="password" type="password" size="25" onChange={this.handleChange}/> <br />
-                <p>{error}</p>
-                <button onClick={this.handlePressEnter}>Ввійти</button>
+            <TopMenu handlePressEnter={this.handlePressEnter}/>
+            <form className='login-form'>
+                <h3 className='login-form-title'>Увійти</h3> <br/>
+
+                <label className='login-form-label'>Імя користувача*</label> <br/>
+                <input className="login-form-input" type="text" size="25" name='login'  onChange={this.handleChange}/><br/>
+                
+                <label className='login-form-label'>Пароль*</label> <br/>
+                <input className="login-form-input" type="password" size="25" name='password' onChange={this.handleChange}/><br/>
+                <p className='login-form-error' >{error}</p>
+                <Link to='/app'><button className='login-form-btn' onClick={this.handlePressEnter}>Увійти</button></Link> 
             </form>
         </Fragment>
         )
@@ -54,3 +63,17 @@ class Login extends Component{
         }),
         {successAuth,errorAuth}
     )(Login);
+/*<Fragment>
+            <TopMenu handlePressEnter={this.handlePressEnter}/>
+            <form className='login-form'>
+                <h3 className='login-form-title'>Увійти</h3> <br/>
+
+                <label className='login-form-label'>Імя користувача*</label> <br/>
+                <input className="login-form-input" type="text" size="25" name='login'  onChange={this.handleChange} required/><br/>
+                
+                <label className='login-form-label'>Пароль*</label> <br/>
+                <input className="login-form-input" type="password" size="25" name='password' onChange={this.handleChange}/><br/>
+                <p className='login-form-error' >{error}</p>
+                <Link to='/map'><button className='login-form-btn' onClick={this.handlePressEnter}>Увійти</button></Link> 
+            </form>
+        </Fragment>*/
