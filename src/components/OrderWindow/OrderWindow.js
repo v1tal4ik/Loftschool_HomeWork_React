@@ -2,8 +2,8 @@ import React ,{Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getName} from '../../modules/User/user';
-import {getIsRoute} from '../../modules/Map/map';
-import {saveCoords,saveRoute,nullRoute} from '../../modules/Map/actions';
+import {getIsOrder} from '../../modules/Map/map';
+import {saveCoords,skipRoute} from '../../modules/Map/actions';
 import { Select } from 'antd';
 import {getListAddress,getRoute} from '../../api';
 import './antd-select.css';
@@ -18,6 +18,7 @@ class OrderWindow extends Component {
         address:[],
         from:'',
         to:'',
+        error:''
     }
 
     hangleChange=(e,place)=>{
@@ -27,11 +28,31 @@ class OrderWindow extends Component {
 
     fetchAddress=()=>{
         const{from,to} = this.state;
-        const{saveCoords,saveRoute}= this.props;
-        getRoute(from,to).then(route=>{
-            saveCoords(route);
-            saveRoute();
-        });
+        if(from && to){
+            if(from !== to){
+                const{saveCoords}= this.props;
+                getRoute(from,to).then(route=>{
+                saveCoords(route);
+            });
+            }else{
+                return this.setState({
+                    error:'* Некоректний адрес'
+                });
+            }
+
+        this.setState({
+            error:''
+        })
+        }else{
+            this.setState({
+                error:'* Заповніть усі поля'
+            })
+        }
+    }
+
+    newOrder=()=>{
+        const {skipRoute}= this.props;
+        skipRoute();
     }
     
     componentDidMount(){
@@ -42,14 +63,10 @@ class OrderWindow extends Component {
        })
     }
 
-    newOrder=()=>{
-        const {nullRoute} =this.props;
-        nullRoute();
-    }
 
     render(){
-        const {isIndetefine,isRoute} = this.props;
-        const{address}=this.state;
+        const {isIndetefine,isOrder} = this.props;
+        const{address,error}=this.state;
         if(!isIndetefine){
             return(
                 <div className='order-window'> 
@@ -61,7 +78,7 @@ class OrderWindow extends Component {
                 </div>
             )
         }else{
-            if(isRoute){
+            if(isOrder){
                 return (
                     <div className='order-window'>
                          <div className='profile-modal'>
@@ -97,6 +114,7 @@ class OrderWindow extends Component {
                                     return <Option key ={street} value={street}>{street}</Option>
                                 })}
                             </Select>
+                            <p className='order-window-error'>{error}</p>
                             <button className='profile-btn' onClick={this.fetchAddress} >Викликати таксі</button> 
                         </div>
                     </div>
@@ -111,6 +129,6 @@ class OrderWindow extends Component {
   export default connect(
       state=>({
         isIndetefine:getName(state),
-        isRoute:getIsRoute(state)
-      }),{saveCoords,saveRoute,nullRoute})(OrderWindow);
+        isOrder:getIsOrder(state)
+      }),{saveCoords,skipRoute})(OrderWindow);
 

@@ -1,31 +1,29 @@
 import {combineReducers } from 'redux';
 import {handleActions} from 'redux-actions';
-import {saveCoords,saveRoute,nullRoute} from './actions';
+import {saveCoords,skipRoute} from './actions';
 
 
 
 const coords = handleActions({
     [saveCoords]:(_state,action)=>action.payload,
-    [nullRoute]:()=>[]
+    [skipRoute]:()=>[]
 },[]);
 
-const isRoute = handleActions({
-    [saveRoute]:()=>true,
-    [nullRoute]:()=>false
+const isOrder = handleActions({
+    [saveCoords]:()=>true,
+    [skipRoute]:()=>false
 },false);
 
-const removeRoute = handleActions({
-    [nullRoute]:()=>true,
-    [saveCoords]:()=>false
-},false);
+
+
+
 
 
 export default combineReducers({
     coords,
-    isRoute,
-    removeRoute
+    isOrder
 });
 
 export const getCoords = (state)=>state.map.coords;
-export const getIsRoute = (state)=>state.map.isRoute;
-export const getIsRemoveRoute = (state)=>state.map.removeRoute;
+export const getIsOrder = (state)=>state.map.isOrder;
+

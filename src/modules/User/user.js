@@ -6,19 +6,19 @@ import {saveData,fetchError} from './actions';
 
 const name = handleActions({
     [saveData]:(_state,action)=>action.payload.name
-},'123');
+},'');
 
 const numberOfCard = handleActions({
     [saveData]:(_state,action)=>action.payload.numberOfCard
-},'123412341234');
+},'');
 
 const date = handleActions({
     [saveData]:(_state,action)=>action.payload.date
-},'11.11.1111');
+},'');
 
 const cvv = handleActions({
     [saveData]:(_state,action)=>action.payload.cvv
-},'123');
+},'');
 
 const error = handleActions({
     [fetchError]:(_state,action)=>action.payload,

@@ -12,7 +12,7 @@ const isAuthorize = handleActions({
     [successAuth]:()=>true,
     [errorAuth]:()=>false,
     [exitAuth]:()=>false
-},true);
+},false);
 
 const error = handleActions({
     [errorAuth]:()=>'* Логін або пароль введено не вірно',

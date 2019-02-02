@@ -1,8 +1,10 @@
 import React ,{Component} from 'react';
 import mapboxgl from 'mapbox-gl';
 import {connect} from 'react-redux';
-import {getCoords,getIsRoute,getIsRemoveRoute} from '../../modules/Map/map';
+import {getCoords,getIsOrder} from '../../modules/Map/map';
 import './mapBox.css';
+
+var id=0;
 
 class Map extends Component {
     map = null;
@@ -18,10 +20,12 @@ class Map extends Component {
       });
     }
     componentDidUpdate(){
-      const{coords,isRoute,remove}=this.props;
-      if(isRoute){
+      const{coords,isOrder}=this.props;
+      const start = coords[0];
+
+      if(isOrder){
         this.map.addLayer({
-          "id": "route",
+          "id": "route"+id,
           "type": "line",
           "source": {
           "type": "geojson",
@@ -43,10 +47,29 @@ class Map extends Component {
               "line-width": 8
           }
           });
+          this.map.flyTo({
+            center: start,
+            zoom: 12,
+            speed: 0.6,
+            curve: 1,
+            easing(t) {
+              return t;
+            }
+          });
+      }else{
+        --id
+        this.map.removeLayer("route"+id);
+        this.map.flyTo({
+          center: [30.2656504, 59.8029126],
+          zoom: 10,
+          speed: 0.8,
+          curve: 1,
+          easing(t) {
+            return t;
+          }
+        });
       }
-      if(remove){
-        this.map.removeLayer('route')
-      }    
+      id++;
     }
   
     componentWillUnmount() {
@@ -61,6 +84,5 @@ class Map extends Component {
   export default connect(
     state=>({
       coords:getCoords(state),
-      isRoute:getIsRoute(state),
-      remove:getIsRemoveRoute(state)
+      isOrder:getIsOrder(state)
     }),{})(Map);
